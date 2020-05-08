@@ -1,1 +1,119 @@
-<h1>Hello!</h1>
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>One Piece eps</title>
+<style type="text/css">
+	
+	body {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		font-family: 'Arial';
+		background-color: lightpink;
+	}
+	p {
+		color: white;
+	}
+
+	#header {
+		z-index: 2; /* layerer headeren oppenfor epWeekFelt */
+		top: 0;
+		width: 100%;
+		background-color: #e01d1d;
+		text-align: center;
+		position: fixed;
+	}
+
+
+	#epWeekFelt {
+		z-index: 1; /* legger dette bak headeren*/
+		top: 280px;
+		position: absolute;
+		width: 500px;
+		height: auto;
+		background-color: lightblue;
+	}
+
+	#epWeekFelt > table{
+		border-collapse: collapse;
+	}
+	#epWeekFelt th, #epWeekFelt td {
+		text-align: center; 
+		border: 1px solid gray;
+		margin: 0px;
+		padding: 10px;
+	}
+	#epWeekFelt tr:hover {
+		background-color: #f5f5f5;
+	}
+
+
+</style>
+</head>
+<body>
+	<div id="header">
+		<img src="https://i.ibb.co/GkGgYrN/logo-downscaled.png" height="80px">
+		<br>
+		<img src="https://i.ibb.co/brP2HFb/bilde.jpg" height="100px">
+		<br>
+		<p>Scroll nedover for mer,
+		<br>
+		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+		<br>
+	</div>
+	<table id="epWeekFelt">
+		<tr><th>veke</th> <th>eps</th></th></th></tr>
+	</table>
+
+<script type="text/javascript">
+	//referanse
+	var epWeekFelt = document.getElementById("epWeekFelt");
+	//definerer globale variabler
+	var epNr = 0;
+	var ukeTeller = 10; //fortsetter videre etter 52 reset, for å få med 53 veke-år-
+	var ukeNr = 10;
+	var aarNr = 2020;
+
+
+	function utskrift(){
+		epWeekFelt.innerHTML += `<tr> <td><b>${ukeNr}</b> (${aarNr})</td> <td>${epNr}</td> <tr>`;
+	}
+
+
+	//såg 5ep/week første 2 veker, så adder det her
+	epNr += 5+5;
+	ukeNr += 1+1;
+	ukeTeller += 1+1;
+	utskrift();
+	
+	//calculater videre med 7eps/week
+	for(i=0; i<(1500/7); i++) { //capper 1500 eps total, loopen kjører for så mange weeks det vil ta å se 1500.
+		epNr += 7;
+		ukeNr++;
+		ukeTeller++;
+
+		if (ukeTeller === 53) { // spesialtilfelle i 2020 der det er 53 veker.
+			utskrift(); //skriv ut (med uke 53).
+			ukeNr = 0; //resetter veka ETTER utskriften
+			aarNr++; //plusser på år
+		}
+		else { //det som vanligvis vil kjøre.
+			if(ukeNr === 53) { //viss ukenr er 53
+				ukeNr = 1; //sett uke til 1, fordi begynner neste år
+				aarNr++ //skifter til neste år
+			}
+			
+			
+			utskrift(); //utskrift som skjer uansett om ukenr === 53 eller ikkje.
+		}
+	}
+
+
+	/*
+	implement rett for første år++ fordi dette året har 53 veker.
+	kan prolly gjer det med en teller som bare fortsette, og if-statement for når den blir 53,
+
+	*/
+</script>
+</body>
+</html>
