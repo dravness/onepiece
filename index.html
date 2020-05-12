@@ -20,11 +20,20 @@
 		z-index: 2; /* layerer headeren oppenfor epWeekFelt */
 		top: 0;
 		width: 100%;
+		height: 70px;
 		background-color: #e01d1d;
 		text-align: center;
 		position: fixed;
 	}
 
+	#bildefelt {
+		top: 70px;
+		position: absolute;
+		height: auto;
+		width: 100%;
+		background-color: #e01d1d;
+		text-align: center;
+	}
 
 	#epWeekFelt {
 		z-index: 1; /* legger dette bak headeren*/
@@ -49,17 +58,20 @@
 	}
 
 
+
 </style>
 </head>
 <body>
 	<div id="header">
+		<p>Scroll nedover for mer,
+		<br>
+		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+	</div>
+	<div id="bildefelt">
 		<img src="https://i.ibb.co/GkGgYrN/logo-downscaled.png" height="80px">
 		<br>
 		<img src="https://i.ibb.co/brP2HFb/bilde.jpg" height="100px">
 		<br>
-		<p>Scroll nedover for mer,
-		<br>
-		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
 		<br>
 	</div>
 	<table id="epWeekFelt">
