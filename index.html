@@ -16,9 +16,20 @@
 		color: white;
 	}
 
+	#bildefelt {
+		z-index: 3; /* layerer headeren oppenfor epWeekFelt */
+		top: 0px;
+		position: absolute;
+		height: auto;
+		width: 100%;
+		background-color: #e01d1d;
+		text-align: center;
+	}
+
+
 	#header {
-		z-index: 2; /* layerer headeren oppenfor epWeekFelt */
-		top: 0;
+		z-index: 2; /* gjemmer denne bak bildefeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epWeekFelt*/
+		top: 0px;
 		width: 100%;
 		height: 70px;
 		background-color: #e01d1d;
@@ -26,15 +37,6 @@
 		position: fixed;
 	}
 
-	#bildefelt {
-		z-index: 2; /* layerer headeren oppenfor epWeekFelt */
-		top: 70px;
-		position: absolute;
-		height: auto;
-		width: 100%;
-		background-color: #e01d1d;
-		text-align: center;
-	}
 
 	#epWeekFelt {
 		z-index: 1; /* legger dette bak headeren*/
@@ -63,17 +65,21 @@
 </style>
 </head>
 <body>
-	<div id="header">
-		<p>Scroll nedover for mer,
-		<br>
-		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
-	</div>
 	<div id="bildefelt">
 		<img src="https://i.ibb.co/GkGgYrN/logo-downscaled.png" height="80px">
 		<br>
 		<img src="https://i.ibb.co/brP2HFb/bilde.jpg" height="100px">
 		<br>
+		<!-- keeper fortsatt teksten her, så den viser fra starten av, og gjør at det ser ut som teksten blir med videre ned -->
+		<p>Scroll nedover for mer, 
 		<br>
+		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+		<br>
+	</div>
+	<div id="header">
+		<p>Scroll nedover for mer,
+		<br>
+		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
 	</div>
 	<table id="epWeekFelt">
 		<tr><th>veke</th> <th>eps</th></th></th></tr>
