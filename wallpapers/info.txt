@@ -1,1 +1,3 @@
 her placer du wallpapers
+husk å add filenavnet (uten path) i arrayet i html-fila
+husk å compress før du uploade, for å få raskare load times
