@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>One Piece eps</title>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="icons/favicon.ico">
 <style type="text/css">
 	
 	body {
@@ -33,10 +33,11 @@
 		height: 70px;
 		background-color: #e01d1d; /*mørk rød*/
 		text-align: center;
-		position: fixed;
+		position: fixed; /* den vil alltid ha posisjon top 0 */
 	}
 
 	#wallpaperDiv {
+		z-index: 0; /*bak epWeekFelt igjen*/
 		width: 1080px;
 		height: 720px;
 		position: fixed; /*gjer at bildet blir stille selv om en scroller*/
@@ -76,14 +77,40 @@
 		-webkit-font-smoothing: antialiased;
 	}
 
+
+
+	#buttonBackToTop{
+		/*fixer at knappen er stuck i venstre hjørne*/
+		position: fixed;
+		width: 128px;
+		height: 128px;
+		z-index: 1; /*same layer som epWeelFelt*/
+		bottom: 40px;
+		right: 180px;
+		
+		background-image: url(icons/backtotop256x.png); /* setter bilde på knappen */
+		background-size: 100%;
+		border: 0; /*remover basic button look*/
+		border-radius: 50%; /* rounder corners så dei passer til den runde knappen */
+		opacity: 0.5; /* gjemmer knappen litt */
+		transition: 0.4s; /*gir animation*/
+	}
+	#buttonBackToTop:focus { /*remover blå box som kommer når knappen blir trykka*/
+		outline: none;
+	}
+	#buttonBackToTop:hover { /* gjer knappen synlig når hovera over */
+		opacity: 1;
+	}
+
 </style>
 </head>
 <body>
-	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div>
+	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div> <!-- wallpaper som ligger bak -->
+	<button id="buttonBackToTop"></button>
 	<div id="headerBildeOgTextFelt">
 		<img src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
 		<img src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
-		<img src="https://i.ibb.co/GkGgYrN/logo-downscaled.png" height="80px">
+		<img src="icons/logo.png" height="80px">
 		<img src="character pngs/halved/sanji.png" height="80px" style="padding-top: 3px; padding-right: 20px; padding-left: 20px;">
 		<img src="character pngs/halved/nami.png" height="80px" style="padding-top: 3px; padding-right: 20px;">
 		<img src="character pngs/halved/luffy.png" height="80px" style="padding-top: 3px;">
@@ -107,6 +134,12 @@
 	//henter tabellen
 	var epWeekFelt = document.getElementById("epWeekFelt");
 	
+//KNAPP TIL TOPPEN
+	var buttonBackToTop = document.getElementById("buttonBackToTop");
+	buttonBackToTop.onclick = function bruh() {
+		headerBildeOgTextFelt.scrollIntoView(); //scrollIntoView hopper til id-en.
+	}
+
 //CODEN FOR UTREGNING AV EPS
 	//definerer globale variabler
 	var epNr = 0;
@@ -164,10 +197,20 @@
 
 		//sjekker for phone
 		if(window.innerWidth < window.innerHeight) { //phone har mindre bredde enn høgde
-			epWeekFelt.style.fontSize = "40px";
+			epWeekFelt.style.fontSize = "40px"; //update font
+			//tilpasser button til phone
+			buttonBackToTop.style.width = "256px";
+			buttonBackToTop.style.height = "256px";
+			buttonBackToTop.style.bottom = "100px";
+			buttonBackToTop.style.right = "20px";
 		}
 		else {
-			epWeekFelt.style.fontSize = "16px";
+			epWeekFelt.style.fontSize = "16px";//update font
+			//tilpasser button til pc
+			buttonBackToTop.style.width = "128px";
+			buttonBackToTop.style.height = "128px";
+			buttonBackToTop.style.bottom = "40px";
+			buttonBackToTop.style.right = "180px";
 		}
 
 	}
