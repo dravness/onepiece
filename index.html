@@ -82,11 +82,11 @@
 	#buttonBackToTop{
 		/*fixer at knappen er stuck i venstre hjørne*/
 		position: fixed;
-		width: 128px;
-		height: 128px;
+		width: 64px;
+		height: 64px;
 		z-index: 1; /*same layer som epWeelFelt*/
-		bottom: 40px;
-		right: 180px;
+		bottom: 10px;
+		right: 10px;
 		
 		background-image: url(icons/backtotop256x.png); /* setter bilde på knappen */
 		background-size: 100%;
@@ -199,18 +199,18 @@
 		if(window.innerWidth < window.innerHeight) { //phone har mindre bredde enn høgde
 			epWeekFelt.style.fontSize = "40px"; //update font
 			//tilpasser button til phone
-			buttonBackToTop.style.width = "256px";
-			buttonBackToTop.style.height = "256px";
-			buttonBackToTop.style.bottom = "100px";
+			buttonBackToTop.style.width = "128px";
+			buttonBackToTop.style.height = "128px";
+			buttonBackToTop.style.bottom = "20px";
 			buttonBackToTop.style.right = "20px";
 		}
 		else {
 			epWeekFelt.style.fontSize = "16px";//update font
 			//tilpasser button til pc
-			buttonBackToTop.style.width = "128px";
-			buttonBackToTop.style.height = "128px";
-			buttonBackToTop.style.bottom = "40px";
-			buttonBackToTop.style.right = "180px";
+			buttonBackToTop.style.width = "64px";
+			buttonBackToTop.style.height = "64px";
+			buttonBackToTop.style.bottom = "10px";
+			buttonBackToTop.style.right = "10px";
 		}
 
 	}
