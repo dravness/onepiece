@@ -16,7 +16,7 @@
 		color: white;
 	}
 
-	#bildefelt {
+	#headerBildeOgTextFelt {
 		z-index: 3; /* layerer headeren oppenfor epWeekFelt */
 		top: 0px;
 		position: absolute;
@@ -26,8 +26,8 @@
 		text-align: center;
 	}
 
-	#header {
-		z-index: 2; /* gjemmer denne bak bildefeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epWeekFelt*/
+	#headerTextStaysAtTop {
+		z-index: 2; /* gjemmer denne bak headerBildeOgTextFeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epWeekFelt*/
 		top: 0px;
 		width: 100%;
 		height: 70px;
@@ -47,11 +47,12 @@
 
 	#epWeekFelt {
 		z-index: 1; /* legger dette bak headeren*/
-		top: 280px;
-		position: absolute;
+		top: 160px; /* så det begynner rett under headeren, ikkje noge dekka for */
+		position: relative;
 		width: 500px;
 		height: auto;
 		background: rgba(173, 216, 230, 0.5); /*setter bkg farge, og gjer at bare den blir gjennomsiktig, ikkje teksten*/ 
+		font-size: 16px; /* keep denne for pc, skal vær større på mobil */
 	}
 
 	#epWeekFelt > table{
@@ -79,18 +80,21 @@
 </head>
 <body>
 	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div>
-	<div id="bildefelt">
+	<div id="headerBildeOgTextFelt">
+		<img src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
+		<img src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
 		<img src="https://i.ibb.co/GkGgYrN/logo-downscaled.png" height="80px">
-		<br>
-		<img src="https://i.ibb.co/brP2HFb/bilde.jpg" height="100px">
+		<img src="character pngs/halved/sanji.png" height="80px" style="padding-top: 3px; padding-right: 20px; padding-left: 20px;">
+		<img src="character pngs/halved/nami.png" height="80px" style="padding-top: 3px; padding-right: 20px;">
+		<img src="character pngs/halved/luffy.png" height="80px" style="padding-top: 3px;">
+
 		<br>
 		<!-- keeper fortsatt teksten her, så den viser fra starten av, og gjør at det ser ut som teksten blir med videre ned -->
 		<p>Scroll nedover for mer, 
 		<br>
 		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
-		<br>
 	</div>
-	<div id="header">
+	<div id="headerTextStaysAtTop">
 		<p>Scroll nedover for mer,
 		<br>
 		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
@@ -100,8 +104,10 @@
 	</table>
 
 <script type="text/javascript">
-	//referanse
+	//henter tabellen
 	var epWeekFelt = document.getElementById("epWeekFelt");
+	
+//CODEN FOR UTREGNING AV EPS
 	//definerer globale variabler
 	var epNr = 0;
 	var ukeTeller = 10; //fortsetter videre etter 52 reset, for å få med 53 veke-år-
@@ -131,42 +137,52 @@
 			ukeNr = 0; //resetter veka ETTER utskriften
 			aarNr++; //plusser på år
 		}
-		else { //det som vanligvis vil kjøre.
+		else { //det som vil kjøre etter før og etter årsskiftet 2020-2021.
 			if(ukeNr === 53) { //viss ukenr er 53
 				ukeNr = 1; //sett uke til 1, fordi begynner neste år
 				aarNr++ //skifter til neste år
 			}
 			
-			
 			utskrift(); //utskrift som skjer uansett om ukenr === 53 eller ikkje.
 		}
 	}
 
+
+//FLEXIBLE, SKIFTER ETTER DEVICENS WIDTH OG HEIGHT
+	
 	//henter wallpaper div og bilde
 	var wallpaperDiv = document.getElementById("wallpaperDiv");
 	var wallpaperImage = document.getElementById("wallpaperImage");
-	function resizeWallpaper() {
-		//setter wallpaperet til å fitte screen size. passer egentlig bare for pc rn tho, kan kanskje gjer at viss width < noge blir det andre ting, for å detecte phone.
-		//resizer diven
+
+	function UpdateForResize(){
+		//resizer diven for wallpaper
 		wallpaperDiv.style.width = window.innerWidth + "px";
 		wallpaperDiv.style.height = window.innerHeight + "px";
-
-		//resizer bildet
+		//resizer sjølve wallpaper bildet
 		wallpaperImage.style.width = window.innerWidth + "px";
 		wallpaperImage.style.height = window.innerHeight + "px";
+
+		//sjekker for phone
+		if(window.innerWidth < window.innerHeight) { //phone har mindre bredde enn høgde
+			epWeekFelt.style.fontSize = "40px";
+		}
+		else {
+			epWeekFelt.style.fontSize = "16px";
+		}
+
 	}
+	UpdateForResize(); //kjører det en gang på load
+	window.onresize = UpdateForResize; //updater om vinduet endres
 
-	resizeWallpaper(); //kjører det med en gang, før noen resizer også.
-	window.onresize = resizeWallpaper; //resizer etter width change, som gjer bakgrunnen flexibel.
-
-
-	//pick random wallpaper
+//PICK RANDOM WALLPAPER
 	//array som holder navn på alle wallpapers
 	var wallpaperArray = ["going merry.png","baratie fanart.jpg","darker blue sea and sky.jpg","going merry cg.jpg","going merry simple.jpg","luffy and gang.jpg","sea and going merry moving.gif","sea and sky 2.jpg","sea and sky.jpg","sea and sky.jpg","sea moving.webp"];
 	//rng, picker random tall fra 0 til array length-1 (siden flooring).
 	var randomTallForWallpaperArray = Math.floor(Math.random()*wallpaperArray.length);
+	//skifter bildet her
+	wallpaperImage.src = "wallpapers/" + wallpaperArray[randomTallForWallpaperArray]; 
 
-	wallpaperImage.src = "wallpapers/" + wallpaperArray[randomTallForWallpaperArray]; //skifter bildet her
+
 </script>
 </body>
 </html>
