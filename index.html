@@ -137,7 +137,7 @@
 //KNAPP TIL TOPPEN
 	var buttonBackToTop = document.getElementById("buttonBackToTop");
 	buttonBackToTop.onclick = function bruh() {
-		headerBildeOgTextFelt.scrollIntoView(); //scrollIntoView hopper til id-en.
+		headerBildeOgTextFelt.scrollIntoView({behavior: "smooth"}); //scrollIntoView hopper til id-en.
 	}
 
 //CODEN FOR UTREGNING AV EPS
