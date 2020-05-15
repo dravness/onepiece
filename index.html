@@ -143,40 +143,42 @@
 //CODEN FOR UTREGNING AV EPS
 	//definerer globale variabler
 	var epNr = 0;
-	var ukeTeller = 10; //fortsetter videre etter 52 reset, for å få med 53 veke-år-
-	var ukeNr = 10;
+	var ukeNr = 10; //begynte på uke 10
 	var aarNr = 2020;
 
-
+	//skriver ut en table row når bedt om det
 	function utskrift(){
 		epWeekFelt.innerHTML += `<tr> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> <tr>`;
 	}
 
-
 	//såg 5ep/week første 2 veker, så adder det her
-	epNr += 5+5;
-	ukeNr += 1+1;
-	ukeTeller += 1+1;
-	utskrift();
+	for(i=0; i<(10/5); i++ ){ // (eps seen) / (eps/week) = 2 weeks
+		epNr += 5;
+		ukeNr += 1;
+		utskrift();
+	}
 	
 	//calculater videre med 7eps/week
-	for(i=0; i<(1500/7); i++) { //capper 1500 eps total, loopen kjører for så mange weeks det vil ta å se 1500.
-		epNr += 7;
-		ukeNr++;
-		ukeTeller++;
+	for(i=0; i<(1500/7); i++) { //capper 1500 eps total, delt på eps/week.
+		epNr += 7; //7 eps
+		ukeNr++; //på 1 week
 
-		if (ukeTeller === 53) { // spesialtilfelle i 2020 der det er 53 veker.
-			utskrift(); //skriv ut (med uke 53).
-			ukeNr = 0; //resetter veka ETTER utskriften
-			aarNr++; //plusser på år
-		}
-		else { //det som vil kjøre etter før og etter årsskiftet 2020-2021.
-			if(ukeNr === 53) { //viss ukenr er 53
-				ukeNr = 1; //sett uke til 1, fordi begynner neste år
-				aarNr++ //skifter til neste år
+		if (aarNr == 2020) { //for spesialtilfelle 2020 der det er 53 uker.
+			if(ukeNr != 53) {
+				utskrift(); //skriver ut vanlige veker i 2020
 			}
-			
-			utskrift(); //utskrift som skjer uansett om ukenr === 53 eller ikkje.
+			if (ukeNr === 53) {
+				utskrift(); //skriver ut 53ende veke
+				aarNr++; //skifter til neste år, så den vil gå til elsen i neste loop.
+				ukeNr = 0; //resetter veka til 0 (fordi den adder på 1 i starten).
+			}
+		}
+		else { //for åra etter 2020 (blir ikkje fleire 53 veker-år før me er done trur eg)
+			if (ukeNr === 53) { //skifter til neste år
+				aarNr++
+				ukeNr = 1;
+			}
+			utskrift();
 		}
 	}
 
