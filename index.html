@@ -78,35 +78,46 @@
 	}
 
 
-
-	#buttonBackToTop{
+	.cornerKnapper{
 		/*fixer at knappen er stuck i venstre hjørne*/
 		position: fixed;
-		width: 64px;
+		width: 64px; /*størrelse*/
 		height: 64px;
 		z-index: 1; /*same layer som epWeelFelt*/
-		bottom: 10px;
-		right: 10px;
 		
-		background-image: url(icons/backtotop256x.png); /* setter bilde på knappen */
 		background-size: 100%;
 		border: 0; /*remover basic button look*/
 		border-radius: 50%; /* rounder corners så dei passer til den runde knappen */
 		opacity: 0.5; /* gjemmer knappen litt */
 		transition: 0.4s; /*gir animation*/
 	}
-	#buttonBackToTop:focus { /*remover blå box som kommer når knappen blir trykka*/
+	.cornerKnapper:focus { /*remover blå box som kommer når knappen blir trykka*/
 		outline: none;
 	}
-	#buttonBackToTop:hover { /* gjer knappen synlig når hovera over */
+	.cornerKnapper:hover { /* gjer knappen synlig når hovera over */
 		opacity: 1;
+	}
+
+	#buttonBackToTop { /*spesifikt for knappen*/
+		bottom: 10px; /*definerer position*/
+		right: 10px;
+		
+		background-image: url(icons/backtotop256x.png); /* setter bilde på knappen */
+	}
+
+	#buttonJumpToWeek { /*spesifikt for knappen*/
+		bottom: 10px; /*definerer position*/
+		right: 80px;
+		
+		background-image: url(icons/jumptoweek256x.png); /* setter bilde på knappen */
 	}
 
 </style>
 </head>
 <body>
 	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div> <!-- wallpaper som ligger bak -->
-	<button id="buttonBackToTop"></button>
+	<button id="buttonBackToTop" class="cornerKnapper"></button>
+	<button id="buttonJumpToWeek" class="cornerKnapper"></button>
 	<div id="headerBildeOgTextFelt">
 		<img src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
 		<img src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
@@ -133,12 +144,10 @@
 <script type="text/javascript">
 	//henter tabellen
 	var epWeekFelt = document.getElementById("epWeekFelt");
-	
-//KNAPP TIL TOPPEN
+	//henter knapper
 	var buttonBackToTop = document.getElementById("buttonBackToTop");
-	buttonBackToTop.onclick = function bruh() {
-		headerBildeOgTextFelt.scrollIntoView({behavior: "smooth"}); //scrollIntoView hopper til id-en.
-	}
+	var buttonJumpToWeek = document.getElementById("buttonJumpToWeek");
+
 
 //CODEN FOR UTREGNING AV EPS
 	//definerer globale variabler
@@ -146,9 +155,9 @@
 	var ukeNr = 10; //begynte på uke 10
 	var aarNr = 2020;
 
-	//skriver ut en table row når bedt om det
+	//skriver ut en table row når bedt om det, med unik ID
 	function utskrift(){
-		epWeekFelt.innerHTML += `<tr> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> <tr>`;
+		epWeekFelt.innerHTML += `<tr id="u${ukeNr}_${aarNr}"> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> <tr>`;
 	}
 
 	//såg 5ep/week første 2 veker, så adder det her
@@ -205,6 +214,11 @@
 			buttonBackToTop.style.height = "128px";
 			buttonBackToTop.style.bottom = "20px";
 			buttonBackToTop.style.right = "20px";
+			//tilpasser jumpToWeek til phone
+			buttonJumpToWeek.style.width = "128px";
+			buttonJumpToWeek.style.height = "128px";
+			buttonJumpToWeek.style.bottom = "158px";
+			buttonJumpToWeek.style.right = "20px";
 		}
 		else {
 			epWeekFelt.style.fontSize = "16px";//update font
@@ -213,6 +227,11 @@
 			buttonBackToTop.style.height = "64px";
 			buttonBackToTop.style.bottom = "10px";
 			buttonBackToTop.style.right = "10px";
+			//tilpasser jumpToWeek til PC
+			buttonJumpToWeek.style.width = "64px";
+			buttonJumpToWeek.style.height = "64px";
+			buttonJumpToWeek.style.bottom = "10px";
+			buttonJumpToWeek.style.right = "80px";
 		}
 
 	}
@@ -227,6 +246,56 @@
 	//skifter bildet her
 	wallpaperImage.src = "wallpapers/" + wallpaperArray[randomTallForWallpaperArray]; 
 
+
+
+//KNAPP TIL TOPPEN
+	buttonBackToTop.onclick = function() {
+		headerBildeOgTextFelt.scrollIntoView({behavior: "smooth"}); //scrollIntoView hopper til id-en.
+	}
+
+//REKNE UT VEKE FRÅ DATOEN DEN FÅR FRA PC
+	//henta fra: 
+	//https://stackoverflow.com/questions/6117814/get-week-of-year-in-javascript-like-in-php
+	function getWeekNumber(d) {
+	    // Copy date so don't modify original
+	    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+	    // Set to nearest Thursday: current date + 4 - current day number
+	    // Make Sunday's day number 7
+	    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+	    // Get first day of year
+	    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+	    // Calculate full weeks to nearest Thursday
+	    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+	    // Return array of year and week number
+	    return [d.getUTCFullYear(), weekNo];
+	}
+
+	var result = getWeekNumber(new Date());
+	
+
+	//henter veka(1) og året(0) ut fra koden over her:
+	var vekaMeErI = `u${result[1]}_${result[0]}`;
+	var vekaMeErIOffset = `u${result[1]-5}_${result[0]}`; //velger fem veker før, så vekaMeErI blir meir mot midten i høgda
+
+	//highlighter veka me er i
+	document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 0.5)";
+
+	//denne messen er fordi :hover i CSS ikkje virker når du har endra background color i js.
+	document.getElementById(vekaMeErI).onmouseover = function(){
+		document.getElementById(vekaMeErI).style.backgroundColor = "white";
+	}
+	document.getElementById(vekaMeErI).onmouseout = function(){
+		document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 0.5)";
+	}
+
+//KNAPP FOR JUMP TE VEKE
+	buttonJumpToWeek.onclick = function() { //onclick
+		//må putte vekaMeErI i getElementById for at den skal gjelde teksten den holder som en Id den skal finne
+		document.getElementById(vekaMeErIOffset).scrollIntoView({behavior: 'smooth'}); //scroll til veka me er i (egentlig nogen veker før, for at veka me er i er meir mot midten)
+		document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 1)"; //highlight feltet
+
+		setTimeout(function(){document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 0.5)";},3000); //tar vekk highlight etter 3 s.
+	}
 
 </script>
 </body>
