@@ -14,17 +14,10 @@
 	}
 	p {
 		color: white;
+		padding: 0;
+		margin: 0;
 	}
 
-	#headerBildeOgTextFelt {
-		z-index: 3; /* layerer headeren oppenfor epsOgWeekTabell */
-		top: 0px;
-		position: absolute;
-		height: auto;
-		width: 100%;
-		background-color: #e01d1d; /*mørk rød*/
-		text-align: center;
-	}
 	.iconsClass {
 		/*gjer at du ikkje kan dragge bildene i forskjellige browsers*/
 		user-drag: none; 
@@ -34,6 +27,24 @@
 		-webkit-user-select: none;
 		-ms-user-select: none; 
 	}
+
+
+	#headerBildeOgTextFelt {
+		display: flex; /*flex, gjer bl.a. at alle headerBoxes he lik height*/
+		z-index: 3; /* layerer headeren oppenfor epsOgWeekTabell */
+		top: 0px;
+		position: absolute;
+		height: auto;
+		width: 100%;
+		background-color: #e01d1d; /*mørk rød*/
+		text-align: center; /*sentrerer innholdet i headerBoxes*/
+		justify-content: center; /*setter headerBoxes mot midten*/
+	}
+	.headerBoxes {
+		display:inline-block;
+	}
+
+
 
 	#headerTextStaysAtTop {
 		z-index: 2; /* gjemmer denne bak headerBildeOgTextFeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epsOgWeekTabell*/
@@ -137,23 +148,26 @@
 	<button id="buttonBackToTop" class="cornerKnapper"></button>
 	<button id="buttonJumpToWeek" class="cornerKnapper"></button>
 	<div id="headerBildeOgTextFelt">
-		<img class="iconsClass" src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
-		<img class="iconsClass" src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
-		<img class="iconsClass" src="icons/logo.png" height="80px">
-		<img class="iconsClass" src="character pngs/halved/sanji.png" height="80px" style="padding-top: 3px; padding-right: 20px; padding-left: 20px;">
-		<img class="iconsClass" src="character pngs/halved/nami.png" height="80px" style="padding-top: 3px; padding-right: 20px;">
-		<img class="iconsClass" src="character pngs/halved/luffy.png" height="80px" style="padding-top: 3px;">
-
-		<br>
-		<!-- keeper fortsatt teksten her, så den viser fra starten av, og gjør at det ser ut som teksten blir med videre ned -->
-		<p>Scroll nedover for mer, 
-		<br>
-		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+		<div class="headerBoxes">
+			<img class="iconsClass" src="character pngs/relative/luffy.png" height="150px" style="padding-top: 3px; padding-right: 10px; padding-left: 80px;">
+			<img class="iconsClass" src="character pngs/relative/zoro.png" height="150px" style="padding-top: 3px; padding-right: 20px;">
+		</div>
+		<div class="headerBoxes">
+			<img class="iconsClass" src="icons/logo.png" height="80px" style="padding-top: 15px;">
+			<br>
+			<!-- keeper fortsatt teksten her, så den viser fra starten av, og gjør at det ser ut som teksten blir med videre ned -->
+			<p>Scroll nedover for mer, 
+			<br>
+			Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+		</div>
+		<div class="headerBoxes">
+			<img class="iconsClass" src="character pngs/relative/nami.png" height="150px" style="padding-top: 3px; padding-left: 20px;">
+			<img class="iconsClass" src="character pngs/relative/sanji.png" height="150px" style="padding-top: 3px; padding-left: 0px;">
+			<img class="iconsClass" src="character pngs/relative/usopp.png" height="150px" style="padding-top: 3px; padding-left: 0px;">
+		</div>
 	</div>
 	<div id="headerTextStaysAtTop">
-		<p>Scroll nedover for mer,
-		<br>
-		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
+		<img class="iconsClass" src="icons/logo.png" height="60px" style="padding-top: 6px;">
 	</div>
 	<table id="epsOgWeekTabell">
 		<tr><th>Veke</th> <th>Eps</th></tr>
