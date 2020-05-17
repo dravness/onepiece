@@ -17,7 +17,7 @@
 	}
 
 	#headerBildeOgTextFelt {
-		z-index: 3; /* layerer headeren oppenfor epWeekFelt */
+		z-index: 3; /* layerer headeren oppenfor epsOgWeekTabell */
 		top: 0px;
 		position: absolute;
 		height: auto;
@@ -25,9 +25,18 @@
 		background-color: #e01d1d; /*mørk rød*/
 		text-align: center;
 	}
+	.iconsClass {
+		/*gjer at du ikkje kan dragge bildene i forskjellige browsers*/
+		user-drag: none; 
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-drag: none;
+		-webkit-user-select: none;
+		-ms-user-select: none; 
+	}
 
 	#headerTextStaysAtTop {
-		z-index: 2; /* gjemmer denne bak headerBildeOgTextFeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epWeekFelt*/
+		z-index: 2; /* gjemmer denne bak headerBildeOgTextFeltet, så den bare kommer frem når en har scrolla forbi bildene. fortsatt over epsOgWeekTabell*/
 		top: 0px;
 		width: 100%;
 		height: 70px;
@@ -37,16 +46,25 @@
 	}
 
 	#wallpaperDiv {
-		z-index: 0; /*bak epWeekFelt igjen*/
+		z-index: 0; /*bak epsOgWeekTabell igjen*/
 		width: 1080px;
 		height: 720px;
 		position: fixed; /*gjer at bildet blir stille selv om en scroller*/
+	}
+	#wallpaperImage { /*bildets id*/
+		/*gjer at du ikkje kan dragge bakgrunnsbildet i forskjellige browsers*/
+		user-drag: none; 
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-drag: none;
+		-webkit-user-select: none;
+		-ms-user-select: none; 
 	}
 
 
 
 
-	#epWeekFelt {
+	#epsOgWeekTabell {
 		z-index: 1; /* legger dette bak headeren*/
 		top: 160px; /* så det begynner rett under headeren, ikkje noge dekka for */
 		position: relative;
@@ -56,20 +74,20 @@
 		font-size: 16px; /* keep denne for pc, skal vær større på mobil */
 	}
 
-	#epWeekFelt > table{
+	#epsOgWeekTabell > table{
 		border-collapse: collapse;
 	}
-	#epWeekFelt th, #epWeekFelt td {
+	#epsOgWeekTabell th, #epsOgWeekTabell td {
 		text-align: center; 
 		border: 1px solid darkblue;
 		margin: 0px;
 		padding: 10px;
 	}
-	#epWeekFelt tr:hover {
+	#epsOgWeekTabell tr:hover {
 		background-color: #f5f5f5;
 	}
 
-	#epWeekFelt th { /*gir 3d headeren en outline*/ 
+	#epsOgWeekTabell th { /*gir 3d headeren en outline*/ 
 		font-weight: bold;
 		color: #fff;
 		text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px,
@@ -119,12 +137,12 @@
 	<button id="buttonBackToTop" class="cornerKnapper"></button>
 	<button id="buttonJumpToWeek" class="cornerKnapper"></button>
 	<div id="headerBildeOgTextFelt">
-		<img src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
-		<img src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
-		<img src="icons/logo.png" height="80px">
-		<img src="character pngs/halved/sanji.png" height="80px" style="padding-top: 3px; padding-right: 20px; padding-left: 20px;">
-		<img src="character pngs/halved/nami.png" height="80px" style="padding-top: 3px; padding-right: 20px;">
-		<img src="character pngs/halved/luffy.png" height="80px" style="padding-top: 3px;">
+		<img class="iconsClass" src="character pngs/halved/usopp.png" height="80px" style="padding-top: 3px; padding-right: 50px;">
+		<img class="iconsClass" src="character pngs/halved/zoro.png" height="80px" style="padding-top: 3px; padding-right: 70px;">
+		<img class="iconsClass" src="icons/logo.png" height="80px">
+		<img class="iconsClass" src="character pngs/halved/sanji.png" height="80px" style="padding-top: 3px; padding-right: 20px; padding-left: 20px;">
+		<img class="iconsClass" src="character pngs/halved/nami.png" height="80px" style="padding-top: 3px; padding-right: 20px;">
+		<img class="iconsClass" src="character pngs/halved/luffy.png" height="80px" style="padding-top: 3px;">
 
 		<br>
 		<!-- keeper fortsatt teksten her, så den viser fra starten av, og gjør at det ser ut som teksten blir med videre ned -->
@@ -137,13 +155,13 @@
 		<br>
 		Trykk CTRL + F og skriv inn veketal for å hoppe.</p>
 	</div>
-	<table id="epWeekFelt">
+	<table id="epsOgWeekTabell">
 		<tr><th>Veke</th> <th>Eps</th></tr>
 	</table>
 
 <script type="text/javascript">
 	//henter tabellen
-	var epWeekFelt = document.getElementById("epWeekFelt");
+	var epsOgWeekTabell = document.getElementById("epsOgWeekTabell");
 	//henter knapper
 	var buttonBackToTop = document.getElementById("buttonBackToTop");
 	var buttonJumpToWeek = document.getElementById("buttonJumpToWeek");
@@ -157,7 +175,7 @@
 
 	//skriver ut en table row når bedt om det, med unik ID
 	function utskrift(){
-		epWeekFelt.innerHTML += `<tr id="u${ukeNr}_${aarNr}"> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> <tr>`;
+		epsOgWeekTabell.innerHTML += `<tr id="u${ukeNr}_${aarNr}"> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> <tr>`;
 	}
 
 	//såg 5ep/week første 2 veker, så adder det her
@@ -208,7 +226,7 @@
 
 		//sjekker for phone
 		if(window.innerWidth < window.innerHeight) { //phone har mindre bredde enn høgde
-			epWeekFelt.style.fontSize = "40px"; //update font
+			epsOgWeekTabell.style.fontSize = "40px"; //update font
 			//tilpasser button til phone
 			buttonBackToTop.style.width = "128px";
 			buttonBackToTop.style.height = "128px";
@@ -221,7 +239,7 @@
 			buttonJumpToWeek.style.right = "20px";
 		}
 		else {
-			epWeekFelt.style.fontSize = "16px";//update font
+			epsOgWeekTabell.style.fontSize = "16px";//update font
 			//tilpasser button til pc
 			buttonBackToTop.style.width = "64px";
 			buttonBackToTop.style.height = "64px";
@@ -240,12 +258,11 @@
 
 //PICK RANDOM WALLPAPER
 	//array som holder navn på alle wallpapers
-	var wallpaperArray = ["going merry.png","baratie fanart.jpg","darker blue sea and sky.jpg","going merry cg.jpg","going merry simple.jpg","luffy and gang.jpg","sea and going merry moving.gif","sea and sky 2.jpg","sea and sky.jpg","sea and sky.jpg","sea moving.webp"];
+	var wallpaperArray = ["going merry.png","baratie fanart.jpg","darker blue sea and sky.jpg","going merry cg.jpg","going merry simple.jpg","luffy and gang.jpg","sea and going merry moving.gif","sea and sky 2.jpg","sea and sky.jpg","sea and sky.jpg","sea moving.webp","luffy and gang 2.jpg","going merry speed.jpg","going merry dark sky.jpg"];
 	//rng, picker random tall fra 0 til array length-1 (siden flooring).
 	var randomTallForWallpaperArray = Math.floor(Math.random()*wallpaperArray.length);
 	//skifter bildet her
 	wallpaperImage.src = "wallpapers/" + wallpaperArray[randomTallForWallpaperArray]; 
-
 
 
 //KNAPP TIL TOPPEN
