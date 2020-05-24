@@ -133,12 +133,23 @@
 		
 		background-image: url(icons/backtotop256x.png); /* setter bilde på knappen */
 	}
-
 	#buttonJumpToWeek { /*spesifikt for knappen*/
 		bottom: 10px; /*definerer position*/
 		right: 80px;
 		
 		background-image: url(icons/jumptoweek256x.png); /* setter bilde på knappen */
+	}
+	#buttonCrunchy { /*spesifikt for knappen*/
+		bottom: 10px; /*definerer position*/
+		right: 150px;
+		
+		background-image: url(icons/crunchy256x.png); /* setter bilde på knappen */
+	}
+	#buttonMAL { /*spesifikt for knappen*/
+		bottom: 10px; /*definerer position*/
+		right: 220px;
+		
+		background-image: url(icons/MAL256x.png); /* setter bilde på knappen */
 	}
 
 </style>
@@ -147,6 +158,8 @@
 	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div> <!-- wallpaper som ligger bak -->
 	<button id="buttonBackToTop" class="cornerKnapper"></button>
 	<button id="buttonJumpToWeek" class="cornerKnapper"></button>
+	<button id="buttonCrunchy" class="cornerKnapper"></button>
+	<button id="buttonMAL" class="cornerKnapper"></button>
 	<div id="headerBildeOgTextFelt">
 		<div class="headerBoxes">
 			<img class="iconsClass" src="character pngs/relative/luffy.png" height="150px" style="padding-top: 3px; padding-right: 10px; padding-left: 80px;">
@@ -179,6 +192,8 @@
 	//henter knapper
 	var buttonBackToTop = document.getElementById("buttonBackToTop");
 	var buttonJumpToWeek = document.getElementById("buttonJumpToWeek");
+	var buttonMAL = document.getElementById("buttonMAL");
+	var buttonCrunchy = document.getElementById("buttonCrunchy");
 
 
 //CODEN FOR UTREGNING AV EPS
@@ -251,6 +266,16 @@
 			buttonJumpToWeek.style.height = "128px";
 			buttonJumpToWeek.style.bottom = "158px";
 			buttonJumpToWeek.style.right = "20px";
+			//tilpasser Cruncy til phone
+			buttonCrunchy.style.width = "128px";
+			buttonCrunchy.style.height = "128px";
+			buttonCrunchy.style.bottom = "296px";
+			buttonCrunchy.style.right = "20px";
+			//tilpasser MAL til phone
+			buttonMAL.style.width = "128px";
+			buttonMAL.style.height = "128px";
+			buttonMAL.style.bottom = "434px";
+			buttonMAL.style.right = "20px";
 		}
 		else {
 			epsOgWeekTabell.style.fontSize = "16px";//update font
@@ -264,6 +289,16 @@
 			buttonJumpToWeek.style.height = "64px";
 			buttonJumpToWeek.style.bottom = "10px";
 			buttonJumpToWeek.style.right = "80px";
+			//tilpasser cruncy til PC
+			buttonCrunchy.style.width = "64px";
+			buttonCrunchy.style.height = "64px";
+			buttonCrunchy.style.bottom = "10px";
+			buttonCrunchy.style.right = "150px";
+			//tilpasser MAL til PC
+			buttonMAL.style.width = "64px";
+			buttonMAL.style.height = "64px";
+			buttonMAL.style.bottom = "10px";
+			buttonMAL.style.right = "220px";
 		}
 
 	}
@@ -278,11 +313,6 @@
 	//skifter bildet her
 	wallpaperImage.src = "wallpapers/" + wallpaperArray[randomTallForWallpaperArray]; 
 
-
-//KNAPP TIL TOPPEN
-	buttonBackToTop.onclick = function() {
-		headerBildeOgTextFelt.scrollIntoView({behavior: "smooth"}); //scrollIntoView hopper til id-en.
-	}
 
 //REKNE UT VEKE FRÅ DATOEN DEN FÅR FRA PC
 	//henta fra: 
@@ -326,6 +356,18 @@
 		document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 1)"; //highlight feltet
 
 		setTimeout(function(){document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 0.5)";},3000); //tar vekk highlight etter 3 s.
+	}
+
+//KNAPP TIL TOPPEN
+	buttonBackToTop.onclick = function() {
+		headerBildeOgTextFelt.scrollIntoView({behavior: "smooth"}); //scrollIntoView hopper til id-en.
+	}
+//KNAPPER CR OG MAL
+	buttonCrunchy.onclick = function() {
+		window.open("https://www.crunchyroll.com/one-piece", "_blank");		
+	}
+	buttonMAL.onclick = function() {
+		window.open("https://myanimelist.net/anime/21/One_Piece", "_blank");
 	}
 
 </script>
