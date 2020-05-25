@@ -151,15 +151,22 @@
 		
 		background-image: url(icons/MAL256x.png); /* setter bilde på knappen */
 	}
+	#buttonGamleVeker { /*spesifikt for knappen*/
+		bottom: 10px; /*definerer position*/
+		right: 290px;
+		
+		background-image: url(icons/gamleveker256x.png); /* setter bilde på knappen */
+	}
 
 </style>
 </head>
 <body>
 	<div id="wallpaperDiv"><img id="wallpaperImage" src=""></div> <!-- wallpaper som ligger bak -->
-	<button id="buttonBackToTop" class="cornerKnapper"></button>
-	<button id="buttonJumpToWeek" class="cornerKnapper"></button>
-	<button id="buttonCrunchy" class="cornerKnapper"></button>
-	<button id="buttonMAL" class="cornerKnapper"></button>
+	<button id="buttonBackToTop" class="cornerKnapper" title="Hopp til toppen"></button>
+	<button id="buttonJumpToWeek" class="cornerKnapper" title="Hopp til veka me er i"></button>
+	<button id="buttonCrunchy" class="cornerKnapper" title="Åpne One Piece på Crunchyroll i ny tab"></button>
+	<button id="buttonMAL" class="cornerKnapper" title="Åpne One Piece på MAL i ny tab"></button>
+	<button id="buttonGamleVeker" class="cornerKnapper" title="Toggle vis gamle veker"></button>
 	<div id="headerBildeOgTextFelt">
 		<div class="headerBoxes">
 			<img class="iconsClass" src="character pngs/relative/luffy.png" height="150px" style="padding-top: 3px; padding-right: 10px; padding-left: 80px;">
@@ -194,6 +201,7 @@
 	var buttonJumpToWeek = document.getElementById("buttonJumpToWeek");
 	var buttonMAL = document.getElementById("buttonMAL");
 	var buttonCrunchy = document.getElementById("buttonCrunchy");
+	var buttonGamleVeker = document.getElementById("buttonGamleVeker");
 
 
 //CODEN FOR UTREGNING AV EPS
@@ -204,7 +212,7 @@
 
 	//skriver ut en table row når bedt om det, med unik ID
 	function utskrift(){
-		epsOgWeekTabell.innerHTML += `<tr id="u${ukeNr}_${aarNr}"> <td><b>${ukeNr}</b> (${aarNr})</td> <td><b>${epNr}</b></td> </tr>`;
+		epsOgWeekTabell.innerHTML += `<tr id="u${ukeNr}_${aarNr}"> <td id="${ukeNr}"><b>${ukeNr}</b> (${aarNr})</td> <td id="${aarNr}"><b>${epNr}</b></td> </tr>`; //nb, epsNr har aarNr fordi trenger å hente det ut lengre nere aleine
 	}
 
 	//såg 5ep/week første 2 veker, så adder det her
@@ -276,6 +284,11 @@
 			buttonMAL.style.height = "128px";
 			buttonMAL.style.bottom = "434px";
 			buttonMAL.style.right = "20px";
+			//tilpasser GamleVeker til phone
+			buttonGamleVeker.style.width = "128px";
+			buttonGamleVeker.style.height = "128px";
+			buttonGamleVeker.style.bottom = "572px";
+			buttonGamleVeker.style.right = "20px";
 		}
 		else {
 			epsOgWeekTabell.style.fontSize = "16px";//update font
@@ -299,6 +312,11 @@
 			buttonMAL.style.height = "64px";
 			buttonMAL.style.bottom = "10px";
 			buttonMAL.style.right = "220px";
+			//tilpasser GamleVeker til PC
+			buttonGamleVeker.style.width = "64px";
+			buttonGamleVeker.style.height = "64px";
+			buttonGamleVeker.style.bottom = "10px";
+			buttonGamleVeker.style.right = "290px";
 		}
 
 	}
@@ -348,6 +366,37 @@
 	document.getElementById(vekaMeErI).onmouseout = function(){
 		document.getElementById(vekaMeErI).style.backgroundColor = "rgba(229, 170, 42, 0.5)";
 	}
+
+//KODE SOM HIDER VEKENE FØR OFFSETTET
+	//travarserer table rows
+	for(i=1; i<epsOgWeekTabell.rows.length; i++){ //tar i=1 for å hoppe over første row som er headers
+		if(Number(epsOgWeekTabell.rows[i].cells[0].id) < result[1]-5 && Number(epsOgWeekTabell.rows[i].cells[1].id) <= result[0]) { //viss tabellrekka si veke er 5 mindre enn currentWeek, og er i samme året, eller åra før
+			epsOgWeekTabell.rows[i].style.display = "none"; //gjemmer rekka
+
+		}
+	}
+//KNAPP SOM TOGGLER OM DEI GAMLE VEKENE SKAL VISES ELLER IKKJE
+	var viserGamleVeker = false;
+	buttonGamleVeker.onclick= function(){
+		if(!viserGamleVeker){ //viss dei gamle vekene ikkje viser, vis dei
+			for(i=1; i<epsOgWeekTabell.rows.length; i++){ //tar i=1 for å hoppe over første row som er headers
+				if(Number(epsOgWeekTabell.rows[i].cells[0].id) < result[1]-5 && Number(epsOgWeekTabell.rows[i].cells[1].id) <= result[0]) { //viss tabellrekka si veke er 5 mindre enn currentWeek, og er i samme året, eller åra før
+					epsOgWeekTabell.rows[i].style.display = "table-row"; //viser rekka
+				}
+			}
+			viserGamleVeker = true; //setter at nå viser en de gamle vekene
+		}	
+		else if(viserGamleVeker){ //viss gamle veker vises, gjem dei
+			for(i=1; i<epsOgWeekTabell.rows.length; i++){ //tar i=1 for å hoppe over første row som er headers
+				if(Number(epsOgWeekTabell.rows[i].cells[0].id) < result[1]-5 && Number(epsOgWeekTabell.rows[i].cells[1].id) <= result[0]) { //viss tabellrekka si veke er 5 mindre enn currentWeek, og er i samme året, eller åra før
+					epsOgWeekTabell.rows[i].style.display = "none"; //gjemmer rekka
+
+				}
+			}	
+			viserGamleVeker = false; //setter at nå vises ikkje dei gamle vekene
+		}
+	}
+
 
 //KNAPP FOR JUMP TE VEKE
 	buttonJumpToWeek.onclick = function() { //onclick
